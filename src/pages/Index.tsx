@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { QuestionCard } from "@/components/QuestionCard";
 import { ResultsView } from "@/components/ResultsView";
+import { UserInfoForm, type UserInfo } from "@/components/UserInfoForm";
 import { toast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
 
@@ -41,6 +42,7 @@ const questions = [
 ];
 
 const Index = () => {
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [showResults, setShowResults] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -71,6 +73,7 @@ const Index = () => {
     // Simulate API call
     const apiPayload = {
       timestamp: new Date().toISOString(),
+      userInfo: userInfo,
       answers: answers,
       totalQuestions: questions.length,
     };
@@ -95,10 +98,20 @@ const Index = () => {
   };
 
   const handleReset = () => {
+    setUserInfo(null);
     setAnswers({});
     setShowResults(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const handleUserInfoSubmit = (data: UserInfo) => {
+    setUserInfo(data);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  if (!userInfo) {
+    return <UserInfoForm onSubmit={handleUserInfoSubmit} />;
+  }
 
   if (showResults) {
     return (
