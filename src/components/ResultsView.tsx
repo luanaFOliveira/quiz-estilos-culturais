@@ -5,36 +5,34 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 interface ResultsViewProps {
   results: Record<string, number>;
   onReset: () => void;
+  dimensions: string[];
+  questions: Array<{ text: string; dimension: string }>;
 }
 
-const dimensions = [
-  "Inovação",
-  "Colaboração", 
-  "Liderança",
-  "Comunicação",
-  "Adaptabilidade",
-  "Resultados",
-  "Desenvolvimento",
-  "Valores"
-];
 
-export const ResultsView = ({ results, onReset }: ResultsViewProps) => {
-  // Calculate scores for each dimension (8 dimensions, 4 questions each)
+export const ResultsView = ({ results, onReset, dimensions, questions }: ResultsViewProps) => {
+  // Calculate scores for each dimension using the mapping provided by questions
   const calculateDimensionScores = () => {
     const scores: Record<string, number> = {};
-    const questionsPerDimension = 4;
-    
-    dimensions.forEach((dimension, index) => {
-      let total = 0;
-      for (let i = 0; i < questionsPerDimension; i++) {
-        const questionIndex = index * questionsPerDimension + i + 1;
-        const answerValue = results[questionIndex.toString()];
-        total += answerValue || 0;
-      }
-      // Convert to 1-4 scale (average and scale down)
-      scores[dimension] = Math.min(4, Math.max(1, Math.round((total / questionsPerDimension) * 0.8)));
+    const counts: Record<string, number> = {};
+
+    // Aggregate totals per dimension based on answers
+    questions.forEach((q, idx) => {
+      const questionNumber = idx + 1;
+      const answerValue = results[questionNumber.toString()] || 0;
+      scores[q.dimension] = (scores[q.dimension] || 0) + answerValue;
+      counts[q.dimension] = (counts[q.dimension] || 0) + 1;
     });
-    
+
+    // Average and clamp to a strict 1-4 scale
+    dimensions.forEach((dimension) => {
+      const total = scores[dimension] || 0;
+      const count = counts[dimension] || 1;
+      const average = total / count;
+      const rounded = Math.round(average);
+      scores[dimension] = Math.min(4, Math.max(1, rounded));
+    });
+
     return scores;
   };
 

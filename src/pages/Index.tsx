@@ -6,40 +6,61 @@ import { UserInfoForm, type UserInfo } from "@/components/UserInfoForm";
 import { toast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
 
-const questions = [
-  "Nossa empresa incentiva a inovação e novas ideias",
-  "Os colaboradores se sentem confortáveis em compartilhar opiniões",
-  "A liderança demonstra valores claros e éticos",
-  "A comunicação entre equipes é clara e eficiente",
-  "Nossa empresa se adapta rapidamente a mudanças",
-  "Os resultados são reconhecidos e celebrados",
-  "Há oportunidades de desenvolvimento profissional",
-  "Os valores da empresa são vividos no dia a dia",
-  "Experimentamos novas abordagens para resolver problemas",
-  "As equipes trabalham bem juntas em projetos",
-  "Os líderes inspiram confiança nos colaboradores",
-  "Informações importantes são compartilhadas abertamente",
-  "Aceitamos bem feedback e críticas construtivas",
-  "Metas são alcançadas consistentemente",
-  "Investimos em treinamento e capacitação",
-  "A cultura organizacional é forte e consistente",
-  "Falhas são vistas como oportunidades de aprendizado",
-  "A colaboração é valorizada mais que a competição",
-  "Há transparência nas decisões da liderança",
-  "Canais de comunicação são acessíveis a todos",
-  "Mudanças organizacionais são bem gerenciadas",
-  "Performance individual é avaliada de forma justa",
-  "Planos de carreira são claros e acessíveis",
-  "Comportamentos alinhados aos valores são recompensados",
-  "Criatividade é encorajada em todas as áreas",
-  "Conflitos são resolvidos de maneira construtiva",
-  "Líderes são acessíveis e receptivos",
-  "Reuniões são produtivas e objetivas",
-  "A empresa responde bem a crises",
-  "Sucessos são atribuídos ao esforço coletivo",
-  "Há mentoria e coaching disponíveis",
-  "A missão e visão da empresa são conhecidas por todos"
+
+export const dimensions = [
+  "Acolhimento",
+  "Aprendizado", 
+  "Autoridade",
+  "Ordem",
+  "Prazer",
+  "Propósito",
+  "Resultado",
+  "Segurança",
 ];
+
+export interface Question {
+  text: string;
+  dimension: string;
+}
+
+
+
+export const questions: Question[] = [
+  //1
+  { text: "Nós focamos em Colaboração e Confiança Mútua: aqui nós trabalhamos juntos para atingir nossos objetivos, confiamos uns nos outros, tanto do ponto de vista profissional quanto pessoal, e prezamos por bons relacionamentos.", dimension: dimensions[0] },
+  //2
+  { text: "Nós focamos em Compaixão e Tolerância: aqui nós trabalhamos em prol de uma causa, e por isso, temos compaixão e tolerância com pessoas de dentro ou fora da empresa. Buscamos um bem maior, não apenas atingir resultados do negócio.", dimension: dimensions[5] },
+  //3
+  { text: "Nós focamos em Exploração e Criatividade: aqui nós ouvimos e exploramos novas ideias de forma criativa, com pensamento aberto para aprender com as experiências e diferentes pontos de vista.", dimension: dimensions[1] },
+  //4
+  { text: "Nós focamos em Diversão e Empolgação: aqui nós buscamos nos divertir, temos um ambiente informal e trabalhamos de forma empolgada e leve no dia a dia.", dimension: dimensions[4] },
+  //5
+  { text: "Nós focamos em Realização e Conquista: aqui nós somos orientados a conquista e realização de nossos objetivos e resultados. Atingir metas é nossa prioridade. ", dimension: dimensions[6] },
+  //6
+  { text: "Nós focamos em Força e Ousadia: aqui nós somos ousados e determinados a vencer os desafios e os riscos. Isto nos energiza e nos dá força para ir em frente.   ", dimension: dimensions[2] },
+  //7
+  { text: "Nós focamos em Planejamento e Precaução: aqui nós gostamos de planejar as atividades com antecedência, avaliando e se prevenindo dos riscos e evitando problemas e erros de última hora", dimension: dimensions[7] },
+  //8
+  { text: "Nós focamos em Estrutura e Estabilidade: aqui nós temos uma estrutura organizacional clara, processos e regras muito bem definidos, e trabalhamos de forma organizada e sincronizada. ", dimension: dimensions[3] },
+  //9
+  { text: "Nós nos sentimos e nos relacionamos como uma grande família: somos próximos, nos respeitamos, cuidamos e queremos o bem um do outro. ", dimension: dimensions[0] },
+  //10
+  { text: "Nós agimos como uma comunidade que possui uma causa idealista que nos motiva e nos une.", dimension: dimensions[5] },
+  //11
+  { text: "Nós nos sentimos como se estivéssemos em um projeto dinâmico, com adaptabilidade às mudanças, muitos aprendizados e tolerância ao erro. ", dimension: dimensions[1] },
+  //12
+  { text: "Nós nos sentimos como se estivéssemos constantemente em uma grande comemoração, trabalhamos com alegria, entusiasmo e prazer. ", dimension: dimensions[4] },
+  //13
+  { text: "Nós valorizamos a meritocracia, ou seja, avaliamos resultados de forma criteriosa e damos mérito ou demérito conforme os atingimentos de objetivos e metas individuais.", dimension: dimensions[6] },
+  //14
+  { text: "Aqui nós nos sentimos como numa arena: lutamos bravamente, queremos vencer os desafios e conquistar a vitória.", dimension: dimensions[2] },
+  //15
+  { text: "Aqui nós somos como uma operação meticulosamente planejada, avaliamos os dados, cenários e contextos, e evitamos erros e riscos.", dimension: dimensions[7] },
+  //16
+  { text: "Aqui nos sentimos como em uma máquina com todas as engrenagens bem lubrificadas. Cada pessoa sabe seu papel e trabalha de forma colaborativa e ordenada com os demais para atingir os objetivos em conjunto.", dimension: dimensions[3] },
+];
+
+
 
 const Index = () => {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -117,7 +138,12 @@ const Index = () => {
     return (
       <div className="min-h-screen p-4 md:p-8">
         <div className="max-w-4xl mx-auto">
-          <ResultsView results={answers} onReset={handleReset} />
+          <ResultsView
+            results={answers}
+            onReset={handleReset}
+            dimensions={dimensions}
+            questions={questions}
+          />
         </div>
       </div>
     );
@@ -155,7 +181,7 @@ const Index = () => {
           {questions.map((question, index) => (
             <QuestionCard
               key={index}
-              question={question}
+              question={question.text}
               questionNumber={index + 1}
               value={answers[(index + 1).toString()]?.toString() || ""}
               onValueChange={(value) => handleAnswerChange(index + 1, value)}
