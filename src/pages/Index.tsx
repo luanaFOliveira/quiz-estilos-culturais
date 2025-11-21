@@ -5,17 +5,18 @@ import { ResultsView } from "@/components/ResultsView";
 import { UserInfoForm, type UserInfo } from "@/components/UserInfoForm";
 import { toast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
+import { calculateDimensionScores, getAverageScore } from "@/lib/quiz-utils";
 
 
 export const dimensions = [
-  "Acolhimento",
-  "Aprendizado", 
-  "Autoridade",
-  "Ordem",
-  "Prazer",
   "Propósito",
-  "Resultado",
+  "Acolhimento",
+  "Ordem",
   "Segurança",
+  "Autoridade",
+  "Resultados",
+  "Prazer",
+  "Aprendizado", 
 ];
 
 export interface Question {
@@ -27,37 +28,37 @@ export interface Question {
 
 export const questions: Question[] = [
   //1
-  { text: "Nós focamos em Colaboração e Confiança Mútua: aqui nós trabalhamos juntos para atingir nossos objetivos, confiamos uns nos outros, tanto do ponto de vista profissional quanto pessoal, e prezamos por bons relacionamentos.", dimension: dimensions[0] },
+  { text: "Nós focamos em Colaboração e Confiança Mútua: aqui nós trabalhamos juntos para atingir nossos objetivos, confiamos uns nos outros, tanto do ponto de vista profissional quanto pessoal, e prezamos por bons relacionamentos.", dimension: dimensions[1] },
   //2
-  { text: "Nós focamos em Compaixão e Tolerância: aqui nós trabalhamos em prol de uma causa, e por isso, temos compaixão e tolerância com pessoas de dentro ou fora da empresa. Buscamos um bem maior, não apenas atingir resultados do negócio.", dimension: dimensions[5] },
+  { text: "Nós focamos em Compaixão e Tolerância: aqui nós trabalhamos em prol de uma causa, e por isso, temos compaixão e tolerância com pessoas de dentro ou fora da empresa. Buscamos um bem maior, não apenas atingir resultados do negócio.", dimension: dimensions[0] },
   //3
-  { text: "Nós focamos em Exploração e Criatividade: aqui nós ouvimos e exploramos novas ideias de forma criativa, com pensamento aberto para aprender com as experiências e diferentes pontos de vista.", dimension: dimensions[1] },
+  { text: "Nós focamos em Exploração e Criatividade: aqui nós ouvimos e exploramos novas ideias de forma criativa, com pensamento aberto para aprender com as experiências e diferentes pontos de vista.", dimension: dimensions[7] },
   //4
-  { text: "Nós focamos em Diversão e Empolgação: aqui nós buscamos nos divertir, temos um ambiente informal e trabalhamos de forma empolgada e leve no dia a dia.", dimension: dimensions[4] },
+  { text: "Nós focamos em Diversão e Empolgação: aqui nós buscamos nos divertir, temos um ambiente informal e trabalhamos de forma empolgada e leve no dia a dia.", dimension: dimensions[6] },
   //5
-  { text: "Nós focamos em Realização e Conquista: aqui nós somos orientados a conquista e realização de nossos objetivos e resultados. Atingir metas é nossa prioridade. ", dimension: dimensions[6] },
+  { text: "Nós focamos em Realização e Conquista: aqui nós somos orientados a conquista e realização de nossos objetivos e resultados. Atingir metas é nossa prioridade. ", dimension: dimensions[5] },
   //6
-  { text: "Nós focamos em Força e Ousadia: aqui nós somos ousados e determinados a vencer os desafios e os riscos. Isto nos energiza e nos dá força para ir em frente.   ", dimension: dimensions[2] },
+  { text: "Nós focamos em Força e Ousadia: aqui nós somos ousados e determinados a vencer os desafios e os riscos. Isto nos energiza e nos dá força para ir em frente.   ", dimension: dimensions[4] },
   //7
-  { text: "Nós focamos em Planejamento e Precaução: aqui nós gostamos de planejar as atividades com antecedência, avaliando e se prevenindo dos riscos e evitando problemas e erros de última hora", dimension: dimensions[7] },
+  { text: "Nós focamos em Planejamento e Precaução: aqui nós gostamos de planejar as atividades com antecedência, avaliando e se prevenindo dos riscos e evitando problemas e erros de última hora", dimension: dimensions[3] },
   //8
-  { text: "Nós focamos em Estrutura e Estabilidade: aqui nós temos uma estrutura organizacional clara, processos e regras muito bem definidos, e trabalhamos de forma organizada e sincronizada. ", dimension: dimensions[3] },
+  { text: "Nós focamos em Estrutura e Estabilidade: aqui nós temos uma estrutura organizacional clara, processos e regras muito bem definidos, e trabalhamos de forma organizada e sincronizada. ", dimension: dimensions[2] },
   //9
-  { text: "Nós nos sentimos e nos relacionamos como uma grande família: somos próximos, nos respeitamos, cuidamos e queremos o bem um do outro. ", dimension: dimensions[0] },
+  { text: "Nós nos sentimos e nos relacionamos como uma grande família: somos próximos, nos respeitamos, cuidamos e queremos o bem um do outro. ", dimension: dimensions[1] },
   //10
-  { text: "Nós agimos como uma comunidade que possui uma causa idealista que nos motiva e nos une.", dimension: dimensions[5] },
+  { text: "Nós agimos como uma comunidade que possui uma causa idealista que nos motiva e nos une.", dimension: dimensions[0] },
   //11
-  { text: "Nós nos sentimos como se estivéssemos em um projeto dinâmico, com adaptabilidade às mudanças, muitos aprendizados e tolerância ao erro. ", dimension: dimensions[1] },
+  { text: "Nós nos sentimos como se estivéssemos em um projeto dinâmico, com adaptabilidade às mudanças, muitos aprendizados e tolerância ao erro. ", dimension: dimensions[7] },
   //12
-  { text: "Nós nos sentimos como se estivéssemos constantemente em uma grande comemoração, trabalhamos com alegria, entusiasmo e prazer. ", dimension: dimensions[4] },
+  { text: "Nós nos sentimos como se estivéssemos constantemente em uma grande comemoração, trabalhamos com alegria, entusiasmo e prazer. ", dimension: dimensions[6] },
   //13
-  { text: "Nós valorizamos a meritocracia, ou seja, avaliamos resultados de forma criteriosa e damos mérito ou demérito conforme os atingimentos de objetivos e metas individuais.", dimension: dimensions[6] },
+  { text: "Nós valorizamos a meritocracia, ou seja, avaliamos resultados de forma criteriosa e damos mérito ou demérito conforme os atingimentos de objetivos e metas individuais.", dimension: dimensions[5] },
   //14
-  { text: "Aqui nós nos sentimos como numa arena: lutamos bravamente, queremos vencer os desafios e conquistar a vitória.", dimension: dimensions[2] },
+  { text: "Aqui nós nos sentimos como numa arena: lutamos bravamente, queremos vencer os desafios e conquistar a vitória.", dimension: dimensions[4] },
   //15
-  { text: "Aqui nós somos como uma operação meticulosamente planejada, avaliamos os dados, cenários e contextos, e evitamos erros e riscos.", dimension: dimensions[7] },
+  { text: "Aqui nós somos como uma operação meticulosamente planejada, avaliamos os dados, cenários e contextos, e evitamos erros e riscos.", dimension: dimensions[3] },
   //16
-  { text: "Aqui nos sentimos como em uma máquina com todas as engrenagens bem lubrificadas. Cada pessoa sabe seu papel e trabalha de forma colaborativa e ordenada com os demais para atingir os objetivos em conjunto.", dimension: dimensions[3] },
+  { text: "Aqui nos sentimos como em uma máquina com todas as engrenagens bem lubrificadas. Cada pessoa sabe seu papel e trabalha de forma colaborativa e ordenada com os demais para atingir os objetivos em conjunto.", dimension: dimensions[2] },
 ];
 
 
@@ -83,7 +84,7 @@ const Index = () => {
     if (unanswered > 0) {
       toast({
         title: "Questionário Incompleto",
-        description: `Por favor, responda todas as ${questions.length} perguntas. Faltam ${unanswered} respostas.`,
+        description: `Por favor, responda todas as ${questions.length} perguntas. Faltam ${unanswered} respostas.`, 
         variant: "destructive",
       });
       return;
@@ -91,28 +92,50 @@ const Index = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
-    const apiPayload = {
-      timestamp: new Date().toISOString(),
-      userInfo: userInfo,
-      answers: answers,
+    const dimensionScores = calculateDimensionScores(answers, dimensions, questions);
+    const avgScore = getAverageScore(dimensionScores, dimensions);
+
+    const uniqueId = `quiz-${Date.now()}-${Math.floor(Math.random() * 999)}`;
+    const quizResult = {
+      dimensionScores: dimensionScores,
+      avgScore: avgScore,
       totalQuestions: questions.length,
+      answers: answers,
+    };
+    const apiPayload = {
+      id: uniqueId, 
+      email: userInfo?.email,
+      result: quizResult, 
     };
 
-    console.log("Enviando para API:", apiPayload);
-    console.log("Endpoint simulado: POST /api/questionario/submit");
-    console.log("Headers:", {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer <token-here>"
-    });
+    try {
+      const response = await fetch('https://s2d72ne0mi.execute-api.us-east-2.amazonaws.com/quiz', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(apiPayload),
+      });
 
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    toast({
-      title: "Questionário Enviado!",
-      description: "Suas respostas foram registradas com sucesso.",
-    });
+      const data = await response.json();
+      console.log('Success:', data);
+
+      toast({
+        title: "Questionário Enviado!",
+        description: "Suas respostas foram registradas com sucesso.",
+      });
+    } catch (error) {
+      console.error('Error sending quiz results:', error);
+      toast({
+        title: "Erro ao Enviar Questionário",
+        description: "Ocorreu um erro ao registrar suas respostas. Tente novamente.",
+        variant: "destructive",
+      });
+    }
 
     setIsSubmitting(false);
     setShowResults(true);
@@ -153,20 +176,17 @@ const Index = () => {
     <div className="min-h-screen p-4 md:p-8">
       <div className="max-w-2xl mx-auto">
         <header className="text-center mb-8">
-          <div className="flex justify-between items-start mb-6">
-            <div></div>
-            <div className="text-right text-xs md:text-sm">
-              <div className="font-bold">Pande</div>
-              <div className="text-muted-foreground">The Value Driven</div>
-              <div className="text-muted-foreground">Company</div>
-            </div>
-          </div>
           
+
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            <span className="text-accent">ID</span> <span className="text-glow">da CULTURA</span>
+            <img 
+              src="/public/images/id_da_cultura_logo.png" 
+              alt="ID da CULTURA Logo" 
+               className="h-auto max-h-40 md:max-h-56 mx-auto"
+            />
           </h1>
           <p className="text-muted-foreground text-sm md:text-base mb-6">
-            Diagnóstico Cultural Organizacional
+            Diagnóstico: Estilos Culturais
           </p>
           
           <div className="mb-2">

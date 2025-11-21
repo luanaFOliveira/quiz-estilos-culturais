@@ -40,20 +40,15 @@ export const UserInfoForm = ({ onSubmit }: UserInfoFormProps) => {
     <div className="min-h-screen p-4 md:p-8 flex items-center justify-center">
       <div className="w-full max-w-md">
         <header className="text-center mb-8">
-          <div className="flex justify-between items-start mb-6">
-            <div></div>
-            <div className="text-right text-xs md:text-sm">
-              <div className="font-bold">Pande</div>
-              <div className="text-muted-foreground">The Value Driven</div>
-              <div className="text-muted-foreground">Company</div>
-            </div>
-          </div>
-          
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            <span className="text-accent">ID</span> <span className="text-glow">da CULTURA</span>
+            <img 
+              src="/images/id_da_cultura_logo.png" 
+              alt="ID da CULTURA Logo" 
+              className="h-auto max-h-80 md:max-h-96 mx-auto"
+            />
           </h1>
-          <p className="text-muted-foreground text-sm md:text-base mb-8">
-            Diagnóstico Cultural Organizacional
+          <p className="text-muted-foreground text-lg md:text-xl mb-8">
+              Diagnóstico: Estilos Culturais
           </p>
         </header>
 

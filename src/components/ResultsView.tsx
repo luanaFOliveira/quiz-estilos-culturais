@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from "recharts";
+import { calculateDimensionScores, getAverageScore, getResultDescription } from "@/lib/quiz-utils";
 
 interface ResultsViewProps {
   results: Record<string, number>;
@@ -11,57 +12,23 @@ interface ResultsViewProps {
 
 
 export const ResultsView = ({ results, onReset, dimensions, questions }: ResultsViewProps) => {
-  // Calculate scores for each dimension using the mapping provided by questions
-  const calculateDimensionScores = () => {
-    const scores: Record<string, number> = {};
-    const counts: Record<string, number> = {};
-
-    // Aggregate totals per dimension based on answers
-    questions.forEach((q, idx) => {
-      const questionNumber = idx + 1;
-      const answerValue = results[questionNumber.toString()] || 0;
-      scores[q.dimension] = (scores[q.dimension] || 0) + answerValue;
-      counts[q.dimension] = (counts[q.dimension] || 0) + 1;
-    });
-
-    // Average and clamp to a strict 1-4 scale
-    dimensions.forEach((dimension) => {
-      const total = scores[dimension] || 0;
-      const count = counts[dimension] || 1;
-      const average = total / count;
-      const rounded = Math.round(average);
-      scores[dimension] = Math.min(4, Math.max(1, rounded));
-    });
-
-    return scores;
-  };
-
-  const dimensionScores = calculateDimensionScores();
+  const dimensionScores = calculateDimensionScores(results, dimensions, questions);
+  const avgScore = getAverageScore(dimensionScores, dimensions);
   
   const chartData = dimensions.map(dimension => ({
     dimension,
     score: dimensionScores[dimension]
   }));
 
-  const getResultDescription = () => {
-    const avgScore = Object.values(dimensionScores).reduce((a, b) => a + b, 0) / dimensions.length;
-    
-    if (avgScore >= 3.5) {
-      return "Cultura Organizacional Excelente: Sua organização demonstra uma cultura forte e bem estabelecida, com altos níveis de engajamento, inovação e colaboração em todas as dimensões avaliadas.";
-    } else if (avgScore >= 2.5) {
-      return "Cultura Organizacional Sólida: Sua organização possui uma cultura positiva com boas práticas estabelecidas. Existem oportunidades de crescimento em algumas áreas específicas.";
-    } else if (avgScore >= 1.5) {
-      return "Cultura em Desenvolvimento: Sua organização está construindo sua cultura. Há espaço significativo para melhorias em várias dimensões para fortalecer o ambiente organizacional.";
-    } else {
-      return "Cultura Organizacional em Formação: Sua organização está nos estágios iniciais de desenvolvimento cultural. Foco estratégico é necessário para estabelecer práticas e valores fundamentais.";
-    }
-  };
-
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h1 className="text-4xl md:text-5xl font-bold mb-2">
-          <span className="text-accent">ID</span> <span className="text-glow">da CULTURA</span>
+        <img 
+              src="/images/id_da_cultura_logo.png" 
+              alt="ID da CULTURA Logo" 
+              className="h-auto max-h-80 md:max-h-96 mx-auto"
+            />
         </h1>
         <p className="text-muted-foreground text-sm">Seus Resultados</p>
       </div>
@@ -69,7 +36,7 @@ export const ResultsView = ({ results, onReset, dimensions, questions }: Results
       <Card className="card-glass p-6 md:p-8">
         <h2 className="text-xl md:text-2xl font-bold mb-4 text-accent">Análise da Cultura</h2>
         <p className="text-foreground leading-relaxed text-sm md:text-base">
-          {getResultDescription()}
+          {getResultDescription(avgScore)}
         </p>
       </Card>
 
