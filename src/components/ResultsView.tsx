@@ -36,7 +36,7 @@ export const ResultsView = ({ results, onReset, dimensions, questions }: Results
         <h2 className="text-xl md:text-2xl font-bold mb-4 text-accent">Respostas enviadas com sucesso!</h2>
         <p className="text-foreground leading-relaxed text-sm md:text-base">
           {/* {getResultDescription(avgScore)} */}
-          Obrigada por enviar suas respostas para o Diagnóstico de Estilos Culturais. Consolidaremos os resultados e entraremos em contato em breve para realizar a devolutiva com seus resultados.
+          Obrigada por enviar suas respostas para o Diagnóstico de Estilos Culturais. Entraremos em contato em breve para realizar a devolutiva com seus resultados.
         </p>
       </Card>
 
