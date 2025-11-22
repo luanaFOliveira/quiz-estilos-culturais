@@ -38,7 +38,7 @@ export const questions: Question[] = [
   //5
   { text: "Nós focamos em Realização e Conquista: aqui nós somos orientados a conquista e realização de nossos objetivos e resultados. Atingir metas é nossa prioridade. ", dimension: dimensions[5] },
   //6
-  { text: "Nós focamos em Força e Ousadia: aqui nós somos ousados e determinados a vencer os desafios e os riscos. Isto nos energiza e nos dá força para ir em frente.   ", dimension: dimensions[4] },
+  { text: "Nós focamos em Decisão rápida e Controle: aqui nós tomamos decisões centralizadas para vencer os desafios e os riscos. Isto nos dá velocidade, força e segurança para ir em frente.", dimension: dimensions[4] },
   //7
   { text: "Nós focamos em Planejamento e Precaução: aqui nós gostamos de planejar as atividades com antecedência, avaliando e se prevenindo dos riscos e evitando problemas e erros de última hora", dimension: dimensions[3] },
   //8
@@ -54,7 +54,7 @@ export const questions: Question[] = [
   //13
   { text: "Nós valorizamos a meritocracia, ou seja, avaliamos resultados de forma criteriosa e damos mérito ou demérito conforme os atingimentos de objetivos e metas individuais.", dimension: dimensions[5] },
   //14
-  { text: "Aqui nós nos sentimos como numa arena: lutamos bravamente, queremos vencer os desafios e conquistar a vitória.", dimension: dimensions[4] },
+  { text: "Aqui nós nos sentimos como um exército em uma missão: respeitamos e confiamos na cadeia de comando para nos guiar com determinação e segurança para a vitória.", dimension: dimensions[4] },
   //15
   { text: "Aqui nós somos como uma operação meticulosamente planejada, avaliamos os dados, cenários e contextos, e evitamos erros e riscos.", dimension: dimensions[3] },
   //16
@@ -104,7 +104,10 @@ const Index = () => {
     };
     const apiPayload = {
       id: uniqueId, 
+      name: userInfo?.name,
       email: userInfo?.email,
+      company: userInfo?.company,
+      position: userInfo?.position,
       result: quizResult, 
     };
 
@@ -178,15 +181,19 @@ const Index = () => {
         <header className="text-center mb-8">
           
 
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+          <h1 className="text-4xl md:text-6xl font-bold">
             <img 
-              src="/public/images/id_da_cultura_logo.png" 
+              src="/images/id_da_cultura_logo.png" 
               alt="ID da CULTURA Logo" 
                className="h-auto max-h-40 md:max-h-56 mx-auto"
             />
           </h1>
-          <p className="text-muted-foreground text-sm md:text-base mb-6">
+          <p className="text-muted-foreground text-lg md:text-xl mb-6">
             Diagnóstico: Estilos Culturais
+          </p>
+          <p className="text-muted-foreground text-sm md:text-base mb-4">
+            As perguntas a seguir referem-se à sua percepção atual sobre os comportamentos observados no seu dia a dia do trabalho, o jeito de ser e fazer as coisas no que se refere aos relacionamentos, gestão, práticas, etc. Tudo isso são evidências de sua Cultura Organizacional. <br />
+            Muitas afirmações abaixo são vistas como positivas. Avalie com critério considerando o que mais se relaciona com o seu contexto organizacional, não com o que você pessoalmente valoriza.
           </p>
           
           <div className="mb-2">

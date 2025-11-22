@@ -30,17 +30,17 @@ export const ResultsView = ({ results, onReset, dimensions, questions }: Results
               className="h-auto max-h-80 md:max-h-96 mx-auto"
             />
         </h1>
-        <p className="text-muted-foreground text-sm">Seus Resultados</p>
       </div>
 
       <Card className="card-glass p-6 md:p-8">
-        <h2 className="text-xl md:text-2xl font-bold mb-4 text-accent">Análise da Cultura</h2>
+        <h2 className="text-xl md:text-2xl font-bold mb-4 text-accent">Respostas enviadas com sucesso!</h2>
         <p className="text-foreground leading-relaxed text-sm md:text-base">
-          {getResultDescription(avgScore)}
+          {/* {getResultDescription(avgScore)} */}
+          Obrigada por enviar suas respostas para o Assessment de Estilos Culturais. Consolidaremos os resultados e entraremos em contato em breve para realizar a devolutiva com seus resultados.
         </p>
       </Card>
 
-      <Card className="card-glass p-6 md:p-8">
+      {/* <Card className="card-glass p-6 md:p-8">
         <h2 className="text-xl md:text-2xl font-bold mb-6 text-accent">Gráfico de Dimensões</h2>
         <ResponsiveContainer width="100%" height={400}>
           <RadarChart data={chartData}>
@@ -51,7 +51,7 @@ export const ResultsView = ({ results, onReset, dimensions, questions }: Results
             />
             <PolarRadiusAxis 
               angle={90} 
-              domain={[0, 4]} 
+              domain={[0, 5]}
               tick={{ fill: '#a8ff60' }}
             />
             <Radar
@@ -68,11 +68,11 @@ export const ResultsView = ({ results, onReset, dimensions, questions }: Results
           {dimensions.map((dimension) => (
             <div key={dimension} className="flex justify-between items-center bg-secondary/30 p-2 rounded">
               <span>{dimension}</span>
-              <span className="text-accent font-bold">{dimensionScores[dimension]}/4</span>
+              <span className="text-accent font-bold">{dimensionScores[dimension]}/5</span> 
             </div>
           ))}
         </div>
-      </Card>
+      </Card> */}
 
       <Button 
         onClick={onReset}

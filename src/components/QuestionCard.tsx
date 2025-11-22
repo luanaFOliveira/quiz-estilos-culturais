@@ -12,8 +12,9 @@ interface QuestionCardProps {
 const options = [
   { value: "1", label: "Discordo Totalmente" },
   { value: "2", label: "Discordo" },
-  { value: "3", label: "Concordo" },
-  { value: "4", label: "Concordo Totalmente" },
+  { value: "3", label: "Neutro" },
+  { value: "4", label: "Concordo" },
+  { value: "5", label: "Concordo Totalmente" },
 ];
 
 export const QuestionCard = ({ question, questionNumber, value, onValueChange }: QuestionCardProps) => {
