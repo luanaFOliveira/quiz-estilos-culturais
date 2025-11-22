@@ -108,7 +108,8 @@ const Index = () => {
       email: userInfo?.email,
       company: userInfo?.company,
       position: userInfo?.position,
-      result: quizResult, 
+      result: quizResult,
+      createdAt: new Date().toLocaleString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }),
     };
 
     try {
@@ -192,8 +193,7 @@ const Index = () => {
             Diagnóstico: Estilos Culturais
           </p>
           <p className="text-muted-foreground text-sm md:text-base mb-4">
-            As perguntas a seguir referem-se à sua percepção atual sobre os comportamentos observados no seu dia a dia do trabalho, o jeito de ser e fazer as coisas no que se refere aos relacionamentos, gestão, práticas, etc. Tudo isso são evidências de sua Cultura Organizacional. <br />
-            Muitas afirmações abaixo são vistas como positivas. Avalie com critério considerando o que mais se relaciona com o seu contexto organizacional, não com o que você pessoalmente valoriza.
+          Responda às perguntas a seguir conforme sua percepção sobre o jeito de ser e fazer as coisas na sua Organização.
           </p>
           
           <div className="mb-2">

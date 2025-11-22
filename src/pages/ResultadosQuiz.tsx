@@ -10,6 +10,7 @@ interface QuizResult {
   email: string;
   company?: string; // Made optional
   position?: string; // Made optional
+  createdAt?: string; // Add createdAt field
   result?: { // Make result itself optional
     dimensionScores?: Record<string, number>; // Made optional
     avgScore?: number;
@@ -70,7 +71,7 @@ const ResultadosQuiz = () => {
 
     // Use dimensions from the first result or fallback to global dimensions
     const dimensionHeaders = results[0]?.result?.dimensionScores ? Object.keys(results[0].result.dimensionScores) : dimensions;
-    const headers = ["ID", "Nome", "Email", "Empresa", "Cargo", "Média", ...dimensionHeaders];
+    const headers = ["ID", "Nome", "Email", "Empresa", "Cargo", "Média", "Data Criação", ...dimensionHeaders]; // Added "Data Criação"
     const csvRows = [];
     csvRows.push(headers.join(";"));
 
@@ -81,8 +82,9 @@ const ResultadosQuiz = () => {
         result.email,
         result.company || "-", // Provide default for optional fields
         result.position || "-", // Provide default for optional fields
-        result.result && typeof result.result.avgScore === 'number' ? result.result.avgScore.toFixed(2) : "-", // Handle optional result and avgScore with type check
-        ...dimensionHeaders.map(dim => result.result?.dimensionScores && typeof result.result.dimensionScores[dim] === 'number' ? result.result.dimensionScores[dim].toFixed(2) : "-") // Handle optional result and dimensionScores with type check
+        result.result && typeof result.result.avgScore === 'number' ? result.result.avgScore.toFixed(1) : "-", // Handle optional result and avgScore with type check
+        result.createdAt || "-", // Add createdAt to CSV row
+        ...dimensionHeaders.map(dim => result.result?.dimensionScores && typeof result.result.dimensionScores[dim] === 'number' ? result.result.dimensionScores[dim].toFixed(1) : "-") // Handle optional result and dimensionScores with type check
       ];
       csvRows.push(rowData.join(";"));
     });
@@ -147,6 +149,7 @@ const ResultadosQuiz = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-accent uppercase tracking-wider">Empresa</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-accent uppercase tracking-wider">Cargo</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-accent uppercase tracking-wider">Média</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-accent uppercase tracking-wider">Data Criação</th> 
                   {(results[0]?.result?.dimensionScores ? Object.keys(results[0].result.dimensionScores) : dimensions).map(dim => (
                     <th key={dim} className="px-6 py-3 text-left text-xs font-medium text-accent uppercase tracking-wider">{dim}</th>
                   ))}
@@ -159,9 +162,10 @@ const ResultadosQuiz = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">{result.email}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">{result.company || "-"}</td> 
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">{result.position || "-"}</td> 
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground font-medium">{result.result && typeof result.result.avgScore === 'number' ? result.result.avgScore.toFixed(2) : "-"}</td> 
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground font-medium">{result.result && typeof result.result.avgScore === 'number' ? result.result.avgScore.toFixed(1) : "-"}</td> 
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">{result.createdAt || "-"}</td> {/* New data cell */}
                     {(results[0]?.result?.dimensionScores ? Object.keys(results[0].result.dimensionScores) : dimensions).map((dim, index) => (
-                      <td key={index} className="px-6 py-4 whitespace-nowrap text-sm text-foreground">{result.result?.dimensionScores && typeof result.result.dimensionScores[dim] === 'number' ? result.result.dimensionScores[dim].toFixed(2) : "-"}</td> 
+                      <td key={index} className="px-6 py-4 whitespace-nowrap text-sm text-foreground">{result.result?.dimensionScores && typeof result.result.dimensionScores[dim] === 'number' ? result.result.dimensionScores[dim].toFixed(1) : "-"}</td> 
                     ))}
                   </tr>
                 ))}

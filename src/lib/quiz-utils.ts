@@ -19,8 +19,7 @@ export const calculateDimensionScores = (
     const total = scores[dimension] || 0;
     const count = counts[dimension] || 1;
     const average = total / count;
-    const rounded = Math.round(average);
-    scores[dimension] = Math.min(5, Math.max(1, rounded)); 
+    scores[dimension] = Math.min(5, Math.max(1, average)); // Keep as float, clamp between 1 and 5
   });
 
   return scores;
