@@ -128,10 +128,6 @@ const Index = () => {
       const data = await response.json();
       console.log('Success:', data);
 
-      toast({
-        title: "Questionário Enviado!",
-        description: "Suas respostas foram registradas com sucesso.",
-      });
     } catch (error) {
       console.error('Error sending quiz results:', error);
       toast({
