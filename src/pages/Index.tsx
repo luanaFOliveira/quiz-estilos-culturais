@@ -30,7 +30,7 @@ export const questions: Question[] = [
   //1
   { text: "Nós focamos em Colaboração e Confiança Mútua: aqui nós trabalhamos juntos para atingir nossos objetivos, confiamos uns nos outros, tanto do ponto de vista profissional quanto pessoal, e prezamos por bons relacionamentos.", dimension: dimensions[1] },
   //2
-  { text: "Nós focamos em Compaixão e Tolerância: aqui nós trabalhamos em prol de uma causa, e por isso, temos compaixão e tolerância com pessoas de dentro ou fora da empresa. Buscamos um bem maior, não apenas atingir resultados do negócio.", dimension: dimensions[0] },
+  { text: "Nós focamos em uma Causa e um Bem Maior. Aqui nós nos energizamos pelas nossas crenças compartilhadas e trabalhamos para gerar um impacto positivo para a sociedade. Isso nos move mais dos que os resultados do negócio.", dimension: dimensions[0] },
   //3
   { text: "Nós focamos em Exploração e Criatividade: aqui nós ouvimos e exploramos novas ideias de forma criativa, com pensamento aberto para aprender com as experiências e diferentes pontos de vista.", dimension: dimensions[7] },
   //4
@@ -38,7 +38,7 @@ export const questions: Question[] = [
   //5
   { text: "Nós focamos em Realização e Conquista: aqui nós somos orientados a conquista e realização de nossos objetivos e resultados. Atingir metas é nossa prioridade. ", dimension: dimensions[5] },
   //6
-  { text: "Nós focamos em Decisão rápida e Controle: aqui nós tomamos decisões centralizadas para vencer os desafios e os riscos. Isto nos dá velocidade, força e segurança para ir em frente.", dimension: dimensions[4] },
+  { text: "Nós focamos em Força e Determinação. Aqui as decisões são tomadas com firmeza pelos que estão no comando, e isso nos deixa confiantes para vencer desafios e seguir em frente.", dimension: dimensions[4] },
   //7
   { text: "Nós focamos em Planejamento e Precaução: aqui nós gostamos de planejar as atividades com antecedência, avaliando e se prevenindo dos riscos e evitando problemas e erros de última hora", dimension: dimensions[3] },
   //8
